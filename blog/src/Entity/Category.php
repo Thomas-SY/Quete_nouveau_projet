@@ -33,16 +33,26 @@ class Category
         $this->articles = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return Category
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -58,6 +68,10 @@ class Category
         return $this->articles;
     }
 
+    /**
+     * @param Article $article
+     * @return Category
+     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -68,6 +82,10 @@ class Category
         return $this;
     }
 
+    /**
+     * @param Article $article
+     * @return Category
+     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {

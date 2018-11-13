@@ -1,33 +1,19 @@
+{# templates/blog/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}Index{% endblock %}
+
+{% block stylesheets %}{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
-
-    <div class="example-wrapper">
-        <h1>Liste des articles</h1>
-
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th>Article</th>
-                <th>Category</th>
-                <th>Content</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for article in articles %}
-                <tr>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.category.name }}</td>
-                    <td>{{ article.content }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <h1>All categories from category s table : </h1>
+    {% for category in categories %}
+        <div>
+            <h2>{{ loop.index }} / <a href="{{ path('blog_show_category', { 'category': category.name }) }}">
+                    {{ category.name }}</a></h2>
+        </div>
+    {% endfor %}
+    <a href="{{ path('home') }}">
+        Back to homepage.
+    </a>
 {% endblock %}

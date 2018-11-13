@@ -32,11 +32,34 @@ class Article
      */
     private $category;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return null|string
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return Article
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -44,11 +67,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return Article
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -56,11 +86,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param Category|null $category
+     * @return Article
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
