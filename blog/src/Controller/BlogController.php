@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,6 +17,28 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BlogController extends AbstractController
 {
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
+    /**
+     * BlogController constructor.
+     *
+     * @param CategoryRepository $categoryRepository
+     * @param ObjectManager $manager
+     */
+    public function __construct(CategoryRepository $categoryRepository, ObjectManager $manager)
+    {
+        $this->categoryRepository = $categoryRepository;
+        $this->manager = $manager;
+    }
+
     /**
      * Show all row from category's entity
      *
@@ -45,7 +71,8 @@ class BlogController extends AbstractController
      * @Route("/{slug<^[a-z0-9- ]+$/>}",
      *     defaults={"slug" = null},
      *     name="blog_slug")
-     *  @return Response A response instance
+     *
+     * @return Response A response instance
      */
     public function show($slug) : Response
     {
@@ -83,6 +110,8 @@ class BlogController extends AbstractController
      *
      * @Route("/category/{category}", name="blog_show_category")
      *
+     * @param string $category
+     *
      * @return Response A response instance
      */
     public function showByCategory(string $category): Response
@@ -98,6 +127,7 @@ class BlogController extends AbstractController
             ["category" => $categoryFind->getId()],
             ["id" => 'DESC'],
             3);
+
         return $this->render('blog/category.html.twig', [
             'articles' => $articleFind,
             'category' => $categoryFind
@@ -107,11 +137,9 @@ class BlogController extends AbstractController
     /**
      * Getting a article with a for id
      *
-     * @param string $id The id article
+     * @Route("/category/article/{id}", defaults={"id" = null}, name="blog_show_article")
      *
-     * @Route("/category/article/{id}",
-     *     defaults={"id" = null},
-     *     name="blog_show_article")
+     * @param Article $id
      *
      * @return Response A response instance
      */
@@ -133,5 +161,31 @@ class BlogController extends AbstractController
             ]
         );
 
+    }
+
+    /**
+     * Creating a category
+     *
+     * @Route ("/category", name="category_new")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function newCategory(Request $request): Response
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->manager->persist($category);
+            $this->manager->flush();
+            $this->addFlash('success', 'Catégorie créée avec succès');
+            return $this->redirectToRoute('blog_index');
+        }
+        return $this->render('blog/newCategory.html.twig', [
+            'category' => $category,
+            'form'     => $form->createView()
+        ]);
     }
 }
