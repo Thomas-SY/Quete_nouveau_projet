@@ -1,4 +1,3 @@
-{# templates/blog/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Index{% endblock %}
@@ -13,6 +12,12 @@
                     {{ category.name }}</a></h2>
         </div>
     {% endfor %}
+    <p>
+        <a href="{{ path('blog_showAll_tag') }}">
+            Show tag.
+        </a>
+    </p>
+
     <p>
         <a href="{{ path('category_new') }}">
             Creating a category.

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tag{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <h1>All Tags from tag s table : </h1>
+    {% for tag in tags %}
+        <div>
+            <h2>{{ loop.index }} / <a href="{{ path('blog_show_tag', { 'name': tag.name }) }}">
+                    {{ tag.name }}</a></h2>
+        </div>
+    {% endfor %}
+    <p>
+        <a href="{{ path('blog_index') }}">
+            Back to homepage.
+        </a>
+    </p>
+{% endblock %}

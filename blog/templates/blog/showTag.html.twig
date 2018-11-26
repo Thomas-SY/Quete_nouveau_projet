@@ -1,23 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ article.title }}{% endblock %}
+{% block title %}{{ tag.name }}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
 
     <div>
-        <h1>Real article s title : {{ article.title }}</h1>
-        <h2>Category : {{ article.category.name }}</h2>
-        <strong>Tags :</strong>
+        <h1>Real tag's name : {{ tag.name }}</h1>
+        <strong>Articles :</strong>
         <ul>
-            {% for tag in tags %}
-                <li>{{ tag.name }}</li>
+            {% for article in articles %}
+                <li>{{ article.title }}</li>
             {% else %}
                 <li>No tags for this article</li>
             {% endfor %}
         </ul>
-        <p>{{ article.content }}</p>
     </div>
 
     <a href="{{ path('blog_index') }}">

@@ -31,8 +31,7 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
-            'method' => 'post',
+            'data_class' => Category::class
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -149,6 +150,8 @@ class BlogController extends AbstractController
             ->getRepository(Article::class)
             ->find($id);
 
+        $tags = $article->getTags();
+
         if (!$article) {
             throw $this->createNotFoundException(
                 'No article with '.$article.' title, found in article\'s table.'
@@ -158,9 +161,61 @@ class BlogController extends AbstractController
             'blog/showArticle.html.twig',
             [
                 'article' => $article,
+                'tags' => $tags
             ]
         );
 
+    }
+
+    /**
+     * Show all row from tag's entity
+     *
+     * @Route("/tag", name="blog_showAll_tag")
+     *
+     * @return Response A response instance
+     */
+    public function showAllTag(): Response
+    {
+        $tags = $this->getDoctrine()
+            ->getRepository(Tag::class)
+            ->findAll();
+
+        if (!$tags ) {
+            throw $this->createNotFoundException(
+                'No Category found in tag\'s table.'
+            );
+        }
+        return $this->render(
+            'blog/showAllTag.html.twig',
+            [
+                'tags' => $tags
+            ]
+        );
+
+    }
+
+    /**
+     * Show all row from category's entity
+     *
+     * @Route("/tag/{name}", defaults={"name" = null}, name="blog_show_tag")
+     *
+     * @param string $name
+     *
+     * @return Response A response instance
+     */
+    public function showByTag(string $name): Response
+    {
+        $tag = $this->getDoctrine()
+            ->getRepository(Tag::class)->findOneByName($name);
+
+        $articles = $tag->getArticles();
+
+        return $this->render('blog/showTag.html.twig',
+            [
+                'articles' => $articles,
+                'tag' => $tag
+            ]
+        );
     }
 
     /**
