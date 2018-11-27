@@ -13,17 +13,20 @@
         </div>
     {% endfor %}
     <p>
-        <a href="{{ path('blog_showAll_tag') }}">
-            Show tag.
+        <a href="{{ path('category_index') }}">
+            Category index.
         </a>
     </p>
-
     <p>
-        <a href="{{ path('category_new') }}">
-            Creating a category.
+        <a href="{{ path('article_index') }}">
+            Article index.
         </a>
     </p>
-
+    <p>
+        <a href="{{ path('tag_index') }}">
+            Tag index.
+        </a>
+    </p>
     <p>
         <a href="{{ path('home') }}">
             Back to homepage.
