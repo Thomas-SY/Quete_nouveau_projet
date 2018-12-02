@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "sensio/framework-extra-bundle": "^5.1",
+        "squizlabs/php_codesniffer": "*",
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/expression-language": "*",
@@ -24,6 +25,8 @@
         "symfony/yaml": "*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "fzaninotto/faker": "^1.8",
         "symfony/debug-pack": "*",
         "symfony/dotenv": "*",
         "symfony/maker-bundle": "^1.0",
@@ -48,7 +51,6 @@
         }
     },
     "replace": {
-        "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",
