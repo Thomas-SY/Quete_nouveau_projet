@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <a href="{{ path('article_index') }}"><i class="fas fa-undo-alt"></i></a>
 
-    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+    <a href="{{ path('article_edit', {'id': article.id}) }}"><i class="fas fa-edit"></i></a>
 
     {{ include('article/_delete_form.html.twig') }}
 {% endblock %}
